@@ -1,0 +1,162 @@
+<odoo>
+  <data>
+    <record id="project_mendatory_inherited" model="ir.ui.view">
+      <field name="name">project.project.view.form.simplified</field>
+      <field name="model">project.project</field>
+      <field name="inherit_id" ref="project.project_project_view_form_simplified"/>
+      <field name="arch" type="xml">
+          <xpath expr="//field[@name='name']" position="replace">
+            <field name="name" string="Nama Proyek" placeholder="e.g. Office Party" required="1"/>
+          </xpath>
+          <xpath expr="//field[@name='name']" position="after">
+               <field name="cabang_id"/>
+               <field name="id_proyek"/>
+               <field name="nilai_kontrak"/>
+               <label for="nilai_uang_muka"/>
+                <div>
+                  <field name="nilai_persen" placeholder="Persen (%)" class="oe_inline"/>
+                  <span class="oe_inline">&#160;&#160;--&#160;&#160;</span>
+                  <field name="nilai_uang_muka" class="oe_inline"/>
+                </div>
+               <field name="nama_owner_id" required="1"/>
+               <field widget="mask" data-inputmask="'mask': '99.999.999.9-999.999'" name="npwp_owner"/>
+               <label for="alamat_owner" string="Alamat Owner"/>
+                <div class="o_address_format">
+                    <field name="alamat_owner" placeholder="Street..." class="o_address_street"/>
+                    <field name="street2" placeholder="Street 2..." class="o_address_street"/>
+                    <field name="city" placeholder="City" class="o_address_city"/>
+                    <field name="state_id" class="o_address_state" placeholder="State" options="{'no_open': True}"/>
+                    <field name="zipp" placeholder="ZIP" class="o_address_zip"/>
+                    <field name="country_id" placeholder="Country" class="o_address_country" options="{'no_open': True, 'no_create': True}"/>
+                </div>
+
+               <field name="project_manager_id" widget="many2many_tags"/>
+               <field name="nama_od_id" widget="many2many_tags"/>
+               <field name="project_ko_id" widget="many2many_tags"/>
+               <field name="qs_user_id" widget="many2many_tags"/>
+               <field name="income_account_id"  required="1"/>
+          </xpath>
+      </field>
+  </record>
+
+  <record id="edit_project_extend" model="ir.ui.view">
+    <field name="name">project.project.extend</field>
+    <field name="model">project.project</field>
+    <field name="inherit_id" ref="project.edit_project"/>
+    <field name="arch" type="xml">
+      <xpath expr="//div[@class='oe_title']" position="replace">
+        <div>
+          <field name="name" placeholder="Project Name"/>
+          <div name="options_active" class="oe_edit_only" invisible="1">
+              <div>
+                  <field name="use_tasks" class="oe_inline"/>
+                  <label for="use_tasks" class="oe_inline" string="Tasks"/>
+                  <span attrs="{'invisible':[('use_tasks', '=', False)]}">as </span>
+                  <field name="label_tasks" class="oe_inline oe_input_align" attrs="{'invisible': [('use_tasks', '=', False)]}"/>
+              </div>
+          </div>
+        </div>
+      </xpath>
+
+      <xpath expr="//field[@name='name']" position="replace">
+        <group>
+          <group>
+            <field name="name" string="Nama Proyek" placeholder="e.g. Office Party" required="0" invisible="1"/>
+          </group>
+        </group>
+      </xpath>
+      <xpath expr="//field[@name='name']" position="after">
+        <group>
+          <group>
+            <field name="name" string="Nama Proyek" placeholder="e.g. Office Party" required="1"/>
+            <field name="cabang_id"/>
+            <field name="id_proyek"/>
+            <field name="nilai_kontrak"/>
+            <label for="nilai_uang_muka"/>
+              <div>
+                <field name="nilai_persen" placeholder="Persen (%)" class="oe_inline"/>
+                <span class="oe_inline">&#160;&#160;--&#160;&#160;</span>
+                <field name="nilai_uang_muka" class="oe_inline" readonly="0"/>
+              </div>
+            <field name="nama_owner_id" required="1"/>
+            <field widget="mask" data-inputmask="'mask': '99.999.999.9-999.999'" name="npwp_owner"/>
+            <!-- <field name="npwp_owner"/> -->
+            <label for="alamat_owner" string="Alamat Owner"/>
+            <div class="o_address_format">
+                <field name="alamat_owner" placeholder="Street..." class="o_address_street"/>
+                <field name="street2" placeholder="Street 2..." class="o_address_street"/>
+                <field name="city" placeholder="City" class="o_address_city"/>
+                <field name="state_id" class="o_address_state" placeholder="State" options="{'no_open': True}"/>
+                <field name="zipp" placeholder="ZIP" class="o_address_zip"/>
+                <field name="country_id" placeholder="Country" class="o_address_country" options="{'no_open': True, 'no_create': True}"/>
+            </div>
+
+           <field name="project_manager_id" widget="many2many_tags"/>
+           <field name="nama_od_id" widget="many2many_tags"/>
+           <field name="project_ko_id" widget="many2many_tags"/>
+           <field name="qs_user_id" widget="many2many_tags"/>
+           <field name="income_account_id" required="1"/>
+          </group>
+        </group>
+      </xpath>
+      <xpath expr="//form/sheet/notebook" position="replace">
+        <notebook invisible="1"/>
+        <!-- </notebook> -->
+      </xpath>
+      <xpath expr="//form/sheet/notebook" position="attributes">
+        <attributes name="invisible">1</attributes>
+      </xpath>
+    </field>
+  </record>
+
+  <record id="project.open_create_project" model="ir.actions.act_window">
+      <field name="name">Create a Project</field>
+      <field name="res_model">project.project</field>
+      <field name="view_type">form</field>
+      <field name="view_mode">form</field>
+      <field name="view_id" ref="project.project_project_view_form_simplified"/>
+      <field name="target">new</field>
+  </record>
+
+   <record id="project.open_view_project_all" model="ir.actions.act_window">
+        <field name="name">Projects</field>
+        <field name="res_model">project.project</field>
+        <field name="view_type">form</field>
+        <field name="domain">[]</field>
+        <field name="view_mode">kanban,tree,form</field>
+        <!-- <field name="view_id" ref="project.open_view_project_all"/> -->
+        <field name="target">main</field>
+        <field name="help" type="html">
+            <p class="oe_view_nocontent_create">
+                Click to create a new project.<br/>
+                <i>Or <a type="action" name="%(project.activate_sample_project)d">activate a sample project</a> to play with.</i>
+            </p>
+        </field>
+    </record>
+
+  <record id="projectview_project" model="ir.ui.view">
+      <field name="name">project.project.tree</field>
+      <field name="model">project.project</field>
+      <field name="inherit_id" ref="project.view_project"/>
+      <field name="arch" type="xml">
+             <field name="name" position="before">
+                <field name="id_proyek"/>
+              </field>
+             <field name="name" position="replace">
+                <field name="name" string="Nama Proyek"/>
+             </field>
+             <field name="name" position="after">
+               <field name="nilai_kontrak"/>
+               <field name="nilai_uang_muka"/>
+             </field>
+             <field name="user_id" position="replace">
+                <field name="user_id" string="Project Manager" invisible="1"/>
+             </field>
+             <field name="partner_id" position="replace">
+                <field name="partner_id" string="Contact" invisible="1"/>
+             </field>
+      </field>
+  </record>
+
+  </data>
+</odoo>
