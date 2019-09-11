@@ -34,14 +34,18 @@ class project_master(models.Model):
 			if rec.nilai_kontrak and rec.nilai_persen:
 				rec.nilai_uang_muka = rec.nilai_kontrak * rec.nilai_persen / 100
 
-
+<<<<<<< HEAD
+<<<<<<< HEAD
 	# @api.onchange('nilai_kontrak', 'nilai_uang_muka')
 	# def _calculate_nilai_persen(self):
 	# 	for rec in self:
 	# 		if rec.nilai_kontrak and rec.nilai_uang_muka:
 	# 			rec.nilai_persen = rec.nilai_uang_muka * 100 / rec.nilai_kontrak
 
-
+=======
+>>>>>>> parent of ca85d32... test commit in test repo 11
+=======
+>>>>>>> parent of ca85d32... test commit in test repo 11
 	@api.onchange('nilai_kontrak', 'nilai_uang_muka')
 	def _calculate_nilai_persen(self):
 		for rec in self:
