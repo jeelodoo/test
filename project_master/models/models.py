@@ -39,9 +39,3 @@ class project_master(models.Model):
 	# 	for rec in self:
 	# 		if rec.nilai_kontrak and rec.nilai_uang_muka:
 	# 			rec.nilai_persen = rec.nilai_uang_muka * 100 / rec.nilai_kontrak
-
-	@api.onchange('nilai_kontrak', 'nilai_uang_muka')
-	def _calculate_nilai_persen(self):
-		for rec in self:
-			if rec.nilai_kontrak and rec.nilai_uang_muka:
-				rec.nilai_persen = rec.nilai_uang_muka * 100 / rec.nilai_kontrak
