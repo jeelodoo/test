@@ -30,11 +30,11 @@
                     <field name="country_id" placeholder="Country" class="o_address_country" options="{'no_open': True, 'no_create': True}"/>
                 </div>
 
-               <field name="project_manager_id" widget="many2many_tags"/>
+               <!-- <field name="project_manager_id" widget="many2many_tags"/>
                <field name="nama_od_id" widget="many2many_tags"/>
                <field name="project_ko_id" widget="many2many_tags"/>
                <field name="qs_user_id" widget="many2many_tags"/>
-               <field name="income_account_id"  required="1"/>
+               <field name="income_account_id"  required="1"/> -->
           </xpath>
       </field>
   </record>
